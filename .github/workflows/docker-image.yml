@@ -35,4 +35,4 @@ jobs:
         run: docker build -t harbor.fulfillment-dev.click/test --tag ${{ steps.date.outputs.date }} .
       -
         name: Docker Push
-        run: docker push harbor.fulfillment-dev.click/test:latest
+        run: docker push harbor.fulfillment-dev.click/test:${{ steps.date.outputs.date }}:latest
