@@ -32,7 +32,7 @@ jobs:
         run: echo "::set-output name=date::$(date +'%Y-%m-%d--%M-%S')"
       -
         name: Build the Docker image
-        run: docker build -t harbor.fulfillment-dev.click/test/github_action_img .
+        run: docker build -t harbor.fulfillment-dev.click/test/github_action_img --tag ${{ steps.date.outputs.date }} .
       -
         name: Docker Push
-        run: docker push harbor.fulfillment-dev.click/test/github_action_img
+        run: docker push harbor.fulfillment-dev.click/test/github_action_img:${{ steps.date.outputs.date }}
