@@ -70,7 +70,6 @@ jobs:
               *"-hotfix."*) ;;
               *)
                 echo "[prerelease] is not allowed."
-                echo "current version is ${CURRENT_VERSION}."
                 exit 1
                 ;;
             esac
