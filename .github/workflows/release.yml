@@ -111,10 +111,13 @@ jobs:
           password: ${{ secrets.HARBOR_PASSWORD }}
 
       - name: Build the Docker image - ArgoCD
-        run: docker build -t harbor.fulfillment-dev.click/fulfillment/argocd --tag ${{ steps.get-bumped-version.outputs.BUMPED_VERSION }} . --no-cache
+        run: docker build -t harbor.fulfillment-dev.click/fulfillment/argocd . --no-cache
+
+      - name: Tagging the Docker image - ArgoCD
+        run: docker image tag harbor.fulfillment-dev.click/fulfillment/argocd:latest harbor.fulfillment-dev.click/fulfillment/argocd:${{ steps.get-bumped-version.outputs.BUMPED_VERSION }}
 
       - name: Docker Push
-        run: docker push harbor.fulfillment-dev.click/fulfillment/argocd:${{ steps.get-bumped-version.outputs.BUMPED_VERSION }}
+        run: docker push harbor.fulfillment-dev.click/fulfillment/argocd:latest
 
       - name: Commit, Tag and Push
         uses: EndBug/add-and-commit@v7
