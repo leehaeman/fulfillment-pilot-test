@@ -106,18 +106,18 @@ jobs:
       - name: Login to Harbor
         uses: docker/login-action@v2
         with:
-          registry: harbor.fulfillment-dev.click
+          registry: harbor.fulfillment.dev.yogiyo.co.kr
           username: ${{ secrets.HARBOR_USERNAME }}
           password: ${{ secrets.HARBOR_PASSWORD }}
 
       - name: Build the Docker image - ArgoCD
-        run: docker build -t harbor.fulfillment-dev.click/fulfillment/argocd . --no-cache
+        run: docker build -t harbor.fulfillment.dev.yogiyo.co.kr/fulfillment/argocd . --no-cache
 
       - name: Tagging the Docker image - ArgoCD
-        run: docker image tag harbor.fulfillment-dev.click/fulfillment/argocd:latest harbor.fulfillment-dev.click/fulfillment/argocd:${{ steps.get-bumped-version.outputs.BUMPED_VERSION }}
+        run: docker image tag harbor.fulfillment.dev.yogiyo.co.kr/fulfillment/argocd:latest harbor.fulfillment.dev.yogiyo.co.kr/fulfillment/argocd:${{ steps.get-bumped-version.outputs.BUMPED_VERSION }}
 
       - name: Docker Push
-        run: docker push harbor.fulfillment-dev.click/fulfillment/argocd:latest
+        run: docker push harbor.fulfillment.dev.yogiyo.co.kr/fulfillment/argocd:latest
 
       - name: Commit, Tag and Push
         uses: EndBug/add-and-commit@v7
