@@ -1,4 +1,4 @@
 [version]
 name = "argocd"
-version = "0.0.1"
+version = "0.0.2"
 description = "Argo CD Docker Image"
