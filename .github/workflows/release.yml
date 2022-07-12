@@ -56,7 +56,7 @@ jobs:
       - name: Get the current version
         id: get-current-version
         run: |
-          CURRENT_VERSION=$(awk -F'[ ="]+' '$1 == "version" { print $2 }' dockerproject.toml)
+          CURRENT_VERSION=$(awk -F'[ ="]+' '$2 == "version" { print $3 }' Dockerfile)
           echo "::set-output name=CURRENT_VERSION::${CURRENT_VERSION}"
 
       - name: Stop if prerelease is not allowed
@@ -95,7 +95,7 @@ jobs:
           CURRENT_VERSION: ${{ steps.get-current-version.outputs.CURRENT_VERSION }}
           BUMPED_VERSION: ${{ steps.get-bumped-version.outputs.BUMPED_VERSION }}
         run: |
-          sed -i "s/version = \"${CURRENT_VERSION}\"/version = \"${BUMPED_VERSION}\"/" dockerproject.toml
+          sed -i "s/version = \"${CURRENT_VERSION}\"/version = \"${BUMPED_VERSION}\"/" Dockerfile
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -111,10 +111,10 @@ jobs:
           password: ${{ secrets.HARBOR_PASSWORD }}
 
       - name: Build the Docker image - ArgoCD
-        run: docker build -t harbor.fulfillment.dev.yogiyo.co.kr/fulfillment/argocd:${{ steps.get-bumped-version.outputs.BUMPED_VERSION }} . --no-cache
+        run: docker build -t harbor.fulfillment.dev.yogiyo.co.kr/fulfillment/releasetest:${{ steps.get-bumped-version.outputs.BUMPED_VERSION }} . --no-cache
 
       - name: Docker Push
-        run: docker push harbor.fulfillment.dev.yogiyo.co.kr/fulfillment/argocd:${{ steps.get-bumped-version.outputs.BUMPED_VERSION }}
+        run: docker push harbor.fulfillment.dev.yogiyo.co.kr/fulfillment/releasetest:${{ steps.get-bumped-version.outputs.BUMPED_VERSION }}
 
       - name: Commit, Tag and Push
         uses: EndBug/add-and-commit@v7
